@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="inscription.php" method="post">
+        <h1>Inscription</h1>
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" id="nom">
+        <br>
+        <label for="prenom">Prénom</label>
+        <input type="text" name="prenom" id="prenom">
+        <br>
+        <label for="Age">Age</label>
+        <input type="number" name="Age" id="Age">
+        <br>
+        <label for="metier">Métier</label>
+        <select name="metier" id="metier">
+            <option value="" disabled selected>Choisissez un métier</option>
+            <option value="cadre">Cadre</option>
+            <option value="fonctionnaire">Fonctionnaire</option>
+            <option value="ouvrier">Ouvrier</option>
+            <option value="PDG">PDG</option>
+        </select>
+        <br>
+        <label for="Pays">Pays</label>
+        <input type="text" name="Pays" id="Pays">
+        <br>
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password">
+        <br>
+        <label for="password2">Confirmer le mot de passe</label>
+        <input type="password" name="password2" id="password2">
+        <br>
+        <form method = "post" action = "inscription.php">
+            <input type="submit" value="S'inscrire">
+        </form>
+        <form method = "post" action = "enregistrer.php">
+            <input type="submit" value="Se connecter">
+        </form>
+
+    </form>
+</body>
+</html>
