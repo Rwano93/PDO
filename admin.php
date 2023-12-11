@@ -26,7 +26,24 @@
             ?>
         </select>
         <input type="submit" value="Supprimer l'utilisateur" name="supprimer">
-        <input type="submit" value="Modifier l'utilisateur" name="modifier" >
+        
+    </form>
+    <form action="modification_utilisateur.php" method="post">
+        <label for="utilisateur">Choisissez un utilisateur :</label>
+        <select id="utilisateur" name="utilisateur">
+            <?php
+            session_start();
+            $bdd = new PDO('mysql:host=localhost;dbname=erwan_site;charset=utf8', 'root', '');
+            $requete = "SELECT id_user, nom, email, mdp  FROM user"; 
+            
+            $resultat = $bdd->query($requete);
+
+            foreach ($resultat as $utilisateur) {
+                echo "<option value='" . $utilisateur['id_user'] . "'>" . "ID: " . $utilisateur['id_user'] . " - " . $utilisateur['nom'] . " - Email: " . $utilisateur['email'] ." - Mot de passe: " . $utilisateur['mdp'] ."</option>";
+            }
+            ?>
+        </select>
+        <input type="submit" value="Modifier l'utilisateur" name="modifier">
     </form>
 
     <?php
@@ -53,7 +70,18 @@
 
         ?>
         <h2>Modification de l'utilisateur</h2>
-        <form action="traitement_utilisateur.php" method="post">
+        <style>
+            h2{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 30px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+        </style>
+        <form action="modification_utilisateur.php" method="post">
+            <h2>MODIF</h2>
             <input type="hidden" name="id_utilisateur_modif" value="<?php echo $idUtilisateurAModifier; ?>">
             <label for="nom_modif">Nouveau Nom :</label>
             <input type="text" id="nom_modif" name="nom_modif" value="<?php echo $utilisateurAModifier['nom']; ?>" required>
@@ -68,7 +96,7 @@
             <input type="text" id="metier_modif" name="metier_modif" value="<?php echo $utilisateurAModifier['metier']; ?>" required>
             <br>
             <label for="pays_modif">Nouveau Pays :</label>
-            <input type="text" id="pays_modif" name="pays_modif" value="<?php echo $utilisateurAModifier['Pays']; ?>" required>
+            <input type="text" id="pays_modif" name="pays_modif" value="<?php echo $utilisateurAModifier['pays']; ?>" required>
             <br>
             <label for="email_modif">Nouvel Email :</label>
             <input type="text" id="email_modif" name="email_modif" value="<?php echo $utilisateurAModifier['email']; ?>" required>
@@ -103,8 +131,24 @@
         }
     }
 ?>
-     
-        <input type="button" value="Retour" onclick="window.location.href='admin.php'" />
-        <input type="button" value="Déconnexion" onclick="window.location.href='enregistrer.html'" />
+<style>
+    .bouton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px; 
+        
+    }
+
+    .bouton input {
+        margin: 0 10px; 
+    }
+</style>
+
+<div class="bouton">
+    <input type="button" value="Retour" onclick="window.location.href='admin.php'" />
+    <input type="button" value="Déconnexion" onclick="window.location.href='enregistrer.html'" />
+</div>
+
 </body>
 </html>
