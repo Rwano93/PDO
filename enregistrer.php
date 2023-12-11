@@ -1,35 +1,35 @@
 <?php
+
 session_start();
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Connexion à la base de données
 $bdd = new PDO('mysql:host=localhost;dbname=erwan_site;charset=utf8', 'root', '');
 
-// Vérification si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupération des valeurs du formulaire
+    
     $email = $_POST["email"];
     $password = $_POST["password"];
 
     // Préparation et exécution de la requête SQL
-    $requete = $bdd->prepare("SELECT id_user, nom, prenom, metier, Pays, email, mdp FROM user WHERE email = ?");
-    $requete->execute([$email]);
+    $requete = $bdd->prepare("SELECT * FROM user WHERE email = ? AND mdp = ?");
+    $requete->execute([$email, $password]);
 
-    if ($requete->errorInfo()[0] !== '00000') {
-        die("Erreur SQL : " . $requete->errorInfo()[2]);
-    }
+    $result = $requete->fetch();
 
-    $utilisateur = $requete->fetch();
-    if ($utilisateur && password_verify($password, $utilisateur['mdp'])) {
+    if ($result) {
+        $_SESSION['user'] = $result['prenom'];
+        $Admin = $result['admin'];
 
-        $_SESSION['email'] = $email;
-        echo "Connexion réussie"; 
-        exit();
-    } else {
-        echo "Email ou mot de passe incorrect";
+        if ($Admin == 1) {
+            echo "Connexion réussie en tant qu'administrateur!";
+            header ('Location: admin.php');
+        } else {
+            echo "Connexion réussie, bienvenue!";
+            header ('Location: index.php'); 
+
+        }
+        } else {
+            echo "Erreur lors de la connexion";
     }
 }
 ?>
+
+
